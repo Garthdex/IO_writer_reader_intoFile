@@ -1,6 +1,4 @@
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by Antoine on 01.12.2016.
@@ -9,32 +7,30 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Coffe coffe = new Coffe("Black");
         Location location = new Location("table", coffe);
-        FileWriter writer = null;
-        FileReader reader = null;
+
+        FileOutputStream fos = new FileOutputStream("C:\\Games\\note.txt");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         try {
-            writer = new FileWriter("C:\\Games\\note.txt", false);
-            writer.write(location.toString());
-        } catch (IOException e) {
+            oos.writeObject(location);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            writer.close();
+            oos.close();
         }
+
+        FileInputStream fis = new FileInputStream("C:\\Games\\note.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        location = null;
+        System.out.println(location);
 
         try {
-            reader = new FileReader("C:\\Games\\note.txt");
-            String out = "";
-            int c;
-            while((c = reader.read()) != -1) {
-                out += (char) c;
-            }
-            System.out.println(out);
-        } catch (IOException e) {
+            location = (Location) ois.readObject();
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
-            reader.close();
+            System.out.println(location.toString());
+            ois.close();
         }
-
-
     }
 }

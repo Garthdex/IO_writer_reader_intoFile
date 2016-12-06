@@ -1,7 +1,9 @@
+import java.io.Serializable;
+
 /**
  * Created by Antoine on 01.12.2016.
  */
-public class Coffe {
+public class Coffe implements Serializable {
     private String name;
 
     public Coffe() {
